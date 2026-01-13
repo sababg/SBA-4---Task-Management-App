@@ -5,7 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/script.js" defer></script>
     <link rel="stylesheet" href="/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <title>Task Management</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Task management</h1>
+      </header>
+
+      <main>
+        <section
+          class="add-new-task-button show"
+          id="addNewTaskButtonContainer"
+        >
+          <button id="addNewTaskButton" type="button">Add new Task</button>
+        </section>
+
+        <section class="task-form hide" id="taskFormContainer">
+          <form id="taskForm">
+            <div class="form-group">
+              <label for="taskName">Task Name</label>
+              <input type="text" id="taskName" required />
+            </div>
+
+            <div class="form-group">
+              <label for="category">Category</label>
+              <select id="category" required>
+                <option value="">Select Category</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Health">Health</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="deadline">Deadline</label>
+              <input type="date" id="deadline" />
+            </div>
+
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select id="status" required>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+
+            <div class="form-button-container">
+              <button type="submit">Add</button>
+              <button type="button" id="taskFormCancelButton">Cancel</button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+  </body>
 </html>

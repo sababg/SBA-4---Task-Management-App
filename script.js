@@ -1,6 +1,9 @@
+let tasksList = [];
+
 let addNewTaskButton = document.getElementById("addNewTaskButton");
 let taskFormCancelButton = document.getElementById("taskFormCancelButton");
 let taskFormContainer = document.getElementById("taskFormContainer");
+let taskForm = document.getElementById("taskForm");
 let addNewTaskButtonContainer = document.getElementById(
   "addNewTaskButtonContainer"
 );
@@ -13,6 +16,17 @@ addNewTaskButton.addEventListener("click", () => {
 taskFormCancelButton.addEventListener("click", () => {
   changeFormDisplayClass();
   changeAddNewTaskDisplayClass();
+});
+
+taskForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const task = {
+    name: document.getElementById("taskName").value,
+    category: document.getElementById("category").value,
+    deadline: document.getElementById("deadline").value,
+    status: document.getElementById("status").value,
+  };
+  tasksList.push(task);
 });
 
 const changeFormDisplayClass = () => {

@@ -215,6 +215,19 @@ td {
     padding: 5px 10px;
 }
 
+.complete-task {
+    border: 1px solid var(--color-Green400);
+    background-color: var(--color-Green100);
+    color: var(--color-Black);
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
 @media screen and (max-width: 870px) {
     .form-button-container {
         align-items: start;

@@ -33,6 +33,7 @@ taskForm.addEventListener("submit", (event) => {
     status: document.getElementById("status").value,
   };
   tasksList.push(task);
+  saveTasksToLocalStorage();
   taskForm.reset();
   changeFormDisplayClass();
   changeAddNewTaskDisplayClass();
@@ -136,3 +137,19 @@ function checkFilter(e) {
 }
 
 taskListFilter.addEventListener("input", checkFilter);
+
+const saveTasksToLocalStorage = () => {
+  localStorage.setItem("tasksList", JSON.stringify(tasksList));
+};
+
+const loadTasksFromLocalStorage = () => {
+  const storedTasks = localStorage.getItem("tasksList");
+  if (storedTasks) {
+    tasksList = JSON.parse(storedTasks);
+    renderList(tasksList);
+  }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadTasksFromLocalStorage();
+});

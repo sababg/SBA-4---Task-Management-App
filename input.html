@@ -68,7 +68,19 @@
         </section>
 
         <section class="task-list-section" id="taskListSection">
-          <h2>Your Tasks</h2>
+          <div class="task-list-header">
+            <h2>Your Tasks</h2>
+            <div class="task-list-filter-container">
+              <p>Filter:</p>
+              <select id="taskListFilter">
+                <option value=""></option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Overdue">Overdue</option>
+              </select>
+            </div>
+          </div>
 
           <div class="table-container">
             <table id="taskTable" class="task-table">
@@ -78,7 +90,7 @@
                   <th>Category</th>
                   <th>Deadline</th>
                   <th>Status</th>
-                  <th>Actions</th>
+                  <th class="hide">Badge</th>
                 </tr>
               </thead>
               <tbody id="taskTableBody"></tbody>

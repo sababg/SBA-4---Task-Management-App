@@ -9,6 +9,9 @@ let addNewTaskButtonContainer = document.getElementById(
 );
 let taskListSection = document.getElementById("taskListSection");
 let taskTableBody = document.getElementById("taskTableBody");
+let taskListFilter = document.getElementById("taskListFilter");
+
+const statuses = ["Pending", "In Progress", "Completed"];
 
 addNewTaskButton.addEventListener("click", () => {
   changeFormDisplayClass();
@@ -33,7 +36,7 @@ taskForm.addEventListener("submit", (event) => {
   taskForm.reset();
   changeFormDisplayClass();
   changeAddNewTaskDisplayClass();
-  renderList();
+  renderList(tasksList);
 });
 
 const changeFormDisplayClass = () => {
@@ -60,9 +63,9 @@ const changeAddNewTaskDisplayClass = () => {
   }
 };
 
-renderList = () => {
+renderList = (listItem) => {
   taskTableBody.textContent = "";
-  tasksList.forEach((element) => {
+  listItem.forEach((element) => {
     const tableRow = document.createElement("tr");
     tableRow.className = "task-table-row";
 
@@ -73,12 +76,63 @@ renderList = () => {
     const deadlineCell = document.createElement("td");
     deadlineCell.textContent = element.deadline;
     const statusCell = document.createElement("td");
-    statusCell.textContent = element.status;
+    const statusSelect = document.createElement("select");
+    statuses.forEach((status) => {
+      const option = document.createElement("option");
+      option.value = status;
+      option.textContent = status;
 
+      if (status === element.status) {
+        option.selected = true;
+      }
+
+      statusSelect.appendChild(option);
+    });
+    statusSelect.addEventListener("change", (e) => {
+      element.status = e.target.value;
+      checkFilter({ target: { value: taskListFilter.value } });
+    });
+    statusCell.appendChild(statusSelect);
     tableRow.appendChild(nameCell);
     tableRow.appendChild(categoryCell);
     tableRow.appendChild(deadlineCell);
     tableRow.appendChild(statusCell);
+    if (dateIsValid(element.deadline)) {
+      const overdueCell = document.createElement("td");
+      const overdueBadge = document.createElement("div");
+      overdueBadge.className = "overdue-task";
+      overdueBadge.textContent = "Overdue";
+      overdueCell.appendChild(overdueBadge);
+      tableRow.appendChild(overdueCell);
+    }
     taskTableBody.appendChild(tableRow);
   });
 };
+
+function dateIsValid(taskDate) {
+  if (
+    new Date(taskDate).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)
+  ) {
+    console.log("The input date is in the past.");
+    return true;
+  } else {
+    console.log("The input date is in the future.");
+    return false;
+  }
+}
+
+function checkFilter(e) {
+  if (!e.target.value) {
+    renderList(tasksList);
+    return;
+  } else if (e.target.value === "Overdue") {
+    renderList(tasksList.filter((item) => dateIsValid(item.deadline)));
+    return;
+  }
+  if (!tasksList.filter((item) => item.status === e.target.value).length) {
+    renderList(tasksList);
+  }
+  renderList(tasksList.filter((item) => item.status === e.target.value));
+}
+
+taskListFilter.addEventListener("input", checkFilter);

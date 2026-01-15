@@ -3,6 +3,8 @@
     --color-White: #fff;
     --color-Green100: #1adb0026;
     --color-Green400: rgba(26, 219, 0, 0.7);
+    --color-Red400: rgba(219, 0, 0, 0.904);
+    --color-Red100: rgba(219, 0, 0, 0.142);
 }
 
 html,
@@ -155,6 +157,18 @@ input:focus {
     width: 80%;
     height: 70%;
 }
+.task-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+}
+.task-list-filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
 
 .task-list-section h2 {
     font-size: 1.5rem;
@@ -178,6 +192,19 @@ input:focus {
 td {
     text-align: start;
     padding: 15px;
+}
+
+.overdue-task {
+    border: 1px solid var(--color-Red400);
+    background-color: var(--color-Red100);
+    color: var(--color-Black);
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 5px 10px;
 }
 
 @media screen and (max-width: 870px) {

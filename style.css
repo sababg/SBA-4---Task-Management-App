@@ -156,13 +156,21 @@ input:focus {
     padding: 30px;
     width: 80%;
     height: 70%;
+    overflow: hidden;
 }
+
 .task-list-header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 30px;
 }
+
+.table-container {
+    overflow: auto;
+    height: 80%;
+}
+
 .task-list-filter-container {
     display: flex;
     align-items: center;

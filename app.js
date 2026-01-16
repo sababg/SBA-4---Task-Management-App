@@ -1,29 +1,31 @@
 let tasksList = [];
+const statuses = ["Pending", "In Progress", "Completed"];
 
 let addNewTaskButton = document.getElementById("addNewTaskButton");
 let taskFormCancelButton = document.getElementById("taskFormCancelButton");
 let taskFormContainer = document.getElementById("taskFormContainer");
 let taskForm = document.getElementById("taskForm");
-let addNewTaskButtonContainer = document.getElementById(
-  "addNewTaskButtonContainer"
-);
 let taskListSection = document.getElementById("taskListSection");
 let taskTableBody = document.getElementById("taskTableBody");
 let taskListFilter = document.getElementById("taskListFilter");
+let addNewTaskButtonContainer = document.getElementById(
+  "addNewTaskButtonContainer"
+);
 
-const statuses = ["Pending", "In Progress", "Completed"];
-
+// Add New Task
 addNewTaskButton.addEventListener("click", () => {
-  changeFormDisplayClass();
-  changeAddNewTaskDisplayClass();
+  changeFormDisplayClass(); // Add new task button is visible, hide the form, otherwise show it
+  changeAddNewTaskDisplayClass(); // Form is visible, hide the Add new task, otherwise show it
 });
 
+// Cancel Button in the new task form onClick
 taskFormCancelButton.addEventListener("click", () => {
   changeFormDisplayClass();
   changeAddNewTaskDisplayClass();
-  taskForm.reset();
+  taskForm.reset(); // Reset the form
 });
 
+// Add new task in form
 taskForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const task = {
@@ -33,13 +35,14 @@ taskForm.addEventListener("submit", (event) => {
     status: document.getElementById("status").value,
   };
   tasksList.push(task);
-  saveTasksToLocalStorage();
+  saveTasksToLocalStorage(); // Add data in localStorage
   taskForm.reset();
   changeFormDisplayClass();
   changeAddNewTaskDisplayClass();
-  renderList(tasksList);
+  renderList(tasksList); // show the stored data in the task table
 });
 
+// Form is visible, hide the Add new task, otherwise show it
 const changeFormDisplayClass = () => {
   if (taskFormContainer.classList.contains("show")) {
     taskFormContainer.classList.remove("show");
@@ -50,6 +53,7 @@ const changeFormDisplayClass = () => {
   }
 };
 
+// Add new task button is visible, hide the form, otherwise show it
 const changeAddNewTaskDisplayClass = () => {
   if (addNewTaskButtonContainer.classList.contains("show")) {
     addNewTaskButtonContainer.classList.remove("show");
@@ -64,13 +68,15 @@ const changeAddNewTaskDisplayClass = () => {
   }
 };
 
+// show the stored data in the task table
 const renderList = (listItem) => {
   taskTableBody.textContent = "";
   listItem.forEach((element) => {
-    createTableRow(element);
+    createTableRow(element); // Create table row
   });
 };
 
+// Create table row
 const createTableRow = (element) => {
   const tableRow = document.createElement("tr");
   tableRow.className = "task-table-row";
@@ -87,6 +93,8 @@ const createTableRow = (element) => {
   const statusCell = document.createElement("td");
 
   const statusSelect = document.createElement("select");
+
+  // Show a select box instead of just a plain text, to give the user the ability to change the status
   statuses.forEach((status) => {
     const option = document.createElement("option");
     option.value = status;
@@ -99,6 +107,7 @@ const createTableRow = (element) => {
     statusSelect.appendChild(option);
   });
 
+  // Update the status in table
   statusSelect.addEventListener("change", (e) => {
     element.status = e.target.value;
     checkFilter({ target: { value: taskListFilter.value } });
@@ -111,6 +120,7 @@ const createTableRow = (element) => {
   tableRow.appendChild(deadlineCell);
   tableRow.appendChild(statusCell);
 
+  // Show the complete badge if status is completed
   if (element.status === "Completed") {
     const completeCell = document.createElement("td");
     const completeBadge = document.createElement("div");
@@ -118,6 +128,7 @@ const createTableRow = (element) => {
     completeBadge.textContent = "Completed";
     completeCell.appendChild(completeBadge);
     tableRow.appendChild(completeCell);
+    // Show the overdue badge if task is overdue
   } else if (dateIsValid(element.deadline)) {
     const overdueCell = document.createElement("td");
     const overdueBadge = document.createElement("div");
@@ -130,6 +141,7 @@ const createTableRow = (element) => {
   taskTableBody.appendChild(tableRow);
 };
 
+// Check if the task is overdue or not
 function dateIsValid(taskDate) {
   if (
     new Date(taskDate).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)
@@ -142,6 +154,7 @@ function dateIsValid(taskDate) {
   }
 }
 
+// Filter function
 function checkFilter(e) {
   if (!e.target.value) {
     renderList(tasksList);
@@ -156,12 +169,15 @@ function checkFilter(e) {
   renderList(tasksList.filter((item) => item.status === e.target.value));
 }
 
+// Filter the table when user select any option from select filter
 taskListFilter.addEventListener("input", checkFilter);
 
+// Save data to the localStorage
 const saveTasksToLocalStorage = () => {
   localStorage.setItem("tasksList", JSON.stringify(tasksList));
 };
 
+// Read the data from the localStorage
 const loadTasksFromLocalStorage = () => {
   const storedTasks = localStorage.getItem("tasksList");
   if (storedTasks) {
@@ -170,6 +186,7 @@ const loadTasksFromLocalStorage = () => {
   }
 };
 
+// Show saved data when page is load
 document.addEventListener("DOMContentLoaded", () => {
   loadTasksFromLocalStorage();
 });

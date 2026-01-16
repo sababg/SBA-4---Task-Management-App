@@ -14,6 +14,13 @@ Task Management App built with vanilla JavaScript, HTML, and CSS. It allows user
 
 ##
 
+![Screenshot of the app](images/Screenshot%202026-01-15%20221340.png)
+![Screenshot of the app](images/Screenshot%202026-01-15%20223501.png)
+![Screenshot of the app](images/Screenshot%202026-01-15%20223522.png)
+![Screenshot of the app](images/Screenshot%202026-01-15%20223532.png)
+
+##
+
 👤 Author
 Saba Beigi
 🌎 Charlotte, NC
